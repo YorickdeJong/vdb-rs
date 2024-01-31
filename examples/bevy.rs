@@ -5,7 +5,7 @@ use bevy_aabb_instancing::{
 };
 use smooth_bevy_cameras::{controllers::unreal::*, LookTransformPlugin};
 use vdb_rs::VdbReader;
-
+use std::path::{Path, PathBuf};
 use std::{error::Error, fs::File, io::BufReader};
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -42,9 +42,16 @@ fn setup(mut commands: Commands, mut color_options_map: ResMut<CuboidMaterialMap
 
     let filename = std::env::args()
         .nth(1)
-        .expect("Missing VDB filename as first argument");
+        .expect("ERROR: MISSING VDB FILENAME AS FIRST ARGUMENT");
 
-    let f = File::open(filename).unwrap();
+    let path = PathBuf::from(&filename);
+
+    // Check if the file has a .vdb extension
+    if path.extension() != Some(std::ffi::OsStr::new("vdb")) {
+        panic!("ERROR: THE PROVIDED FILE IS NOT A VDB FILE.");
+    }
+
+    let f = File::open(path).unwrap();
     let mut vdb_reader = VdbReader::new(BufReader::new(f)).unwrap();
     let grid_names = vdb_reader.available_grids();
 
