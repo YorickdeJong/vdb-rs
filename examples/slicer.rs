@@ -15,7 +15,8 @@ use vdb_rs::{Grid, Map, VdbLevel, VdbReader};
 use std::{error::Error, fs::File, io::BufReader};
 
 
-// Contain an example of how to slice through a VDB file involve computing cross-sections or generating 2D representations of 3D volumetric data.
+// Contains an example of how to slice through a VDB file involve computing cross-sections or generating 2D representations of 
+// 3D volumetric data.
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum SliceAxis {

@@ -5,8 +5,11 @@ use bevy_aabb_instancing::{
 };
 use smooth_bevy_cameras::{controllers::unreal::*, LookTransformPlugin};
 use vdb_rs::VdbReader;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::{error::Error, fs::File, io::BufReader};
+use std::env;
+// Showcases how the vdb-rs crate can be used in conjunction with Bevy to visualize or manipulate volumetric data.
+
 
 fn main() -> Result<(), Box<dyn Error>> {
     App::new()
@@ -44,7 +47,30 @@ fn setup(mut commands: Commands, mut color_options_map: ResMut<CuboidMaterialMap
         .nth(1)
         .expect("ERROR: MISSING VDB FILENAME AS FIRST ARGUMENT");
 
-    let path = PathBuf::from(&filename);
+
+    if cfg!(target_os = "windows") {
+        println!("This is Windows.");
+    } else {
+        println!("This is not Windows.");
+    }
+
+    // Cross-platform home directory expansion
+    let expanded_filename = if cfg!(target_os = "windows") {
+        if filename.starts_with("~") {
+            // Replace '~' with the value of %USERPROFILE% on Windows
+            match env::var("USERPROFILE") {
+                Ok(home) => filename.replacen("~", &home, 1),
+                Err(_) => panic!("USERPROFILE variable not found"),
+            }
+        } else {
+            filename
+        }
+    } else {
+        // Use `shellexpand` for Unix-like systems
+        shellexpand::tilde(&filename).into_owned()
+    };
+
+    let path = PathBuf::from(&expanded_filename);
 
     // Check if the file has a .vdb extension
     if path.extension() != Some(std::ffi::OsStr::new("vdb")) {

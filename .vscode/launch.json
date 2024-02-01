@@ -1,0 +1,110 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Bevy Example",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/examples/bevy",
+            "cwd": "${workspaceFolder}",
+            "args": ["~/Downloads/TornadoLoopingVDB/TornadoLooping/TornadoVDB/tornado_0000.vdb"],
+            "sourceLanguages": ["rust"]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'vdb-rs'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=vdb-rs"
+                ],
+                "filter": {
+                    "name": "vdb-rs",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'bevy'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=bevy",
+                    "--package=vdb-rs"
+                ],
+                "filter": {
+                    "name": "bevy",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'bevy'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=bevy",
+                    "--package=vdb-rs"
+                ],
+                "filter": {
+                    "name": "bevy",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'slicer'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=slicer",
+                    "--package=vdb-rs"
+                ],
+                "filter": {
+                    "name": "slicer",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'slicer'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=slicer",
+                    "--package=vdb-rs"
+                ],
+                "filter": {
+                    "name": "slicer",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
